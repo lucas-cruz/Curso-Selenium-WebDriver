@@ -8,7 +8,7 @@ public class TesteGoogle {
 	@Test
 	public void teste() {
 		//direcionamento para o driver alocado no diretório do projeto
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver.exe");
 		
 		WebDriver driver = new ChromeDriver();
 		driver.get("http://www.google.com");
