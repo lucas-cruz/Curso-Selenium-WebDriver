@@ -13,6 +13,7 @@ public class TesteCampoTreinamento {
 	
 	private WebDriver driver;
 	private DSL dsl;
+	private CampoTreinamentoPage page;
 	
 	@Before
 	public void inicializa() {
@@ -20,6 +21,7 @@ public class TesteCampoTreinamento {
 		driver = new ChromeDriver();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 	
 	@After
@@ -33,31 +35,31 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void testeTextField() {
-		dsl.escreve("elementosForm:nome", "teste");
+		page.setNome("teste");
 		Assert.assertEquals("teste", dsl.obterValorCampo("elementosForm:nome"));
 	}
 	
 	@Test
 	public void deveInteragirComTextArea() {
-		dsl.escreve("elementosForm:sugestoes", "teste selenium");
+		page.setSugestoes("teste selenium");
 		Assert.assertEquals("teste selenium", dsl.obterValorCampo("elementosForm:sugestoes"));
 	}
 	
 	@Test
 	public void deveInteragirComRadioButton() {
-		dsl.clicarRadio("elementosForm:sexo:0");
+		page.setSexoMascuino();
 		Assert.assertTrue(dsl.isRadioSelected("elementosForm:sexo:0"));
 	}
 	
 	@Test
 	public void deveInteragirComCheckBox() {
-		dsl.clicarRadio("elementosForm:comidaFavorita:0");
+		page.setComidaCarne();
 		Assert.assertTrue(dsl.isCheckboxSelected("elementosForm:comidaFavorita:0"));
 	}
 	
 	@Test
 	public void deveInteragirComCombo() {
-		dsl.selecionarCombo("elementosForm:escolaridade", "Mestrado");
+		page.setEscolaridade("Mestrado");
 		//assertiva
 		Assert.assertEquals("Mestrado", dsl.obterValorCombo("elementosForm:escolaridade"));		
 	}
