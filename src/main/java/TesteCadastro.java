@@ -1,28 +1,40 @@
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class TesteCadastro {
 	
+	
+	private WebDriver driver;
+	private DSL dsl;
+	
+	@Before
+	public void inicializa() {
+		//System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
+	}
+	
+	@After
+	public void finaliza() {
+		driver.close();		
+	}
+	
 	@Test
 	public void Cadastro() {
-		//System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("teste");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("teste");
+		dsl.escreve("elementosForm:nome", "teste");
+		dsl.escreve("elementosForm:sobrenome", "teste");
+		dsl.clicarRadio("elementosForm:sexo:0");
+		dsl.clicarRadio("elementosForm:comidaFavorita:0");
 		
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+		dsl.selecionarCombo("elementosForm:escolaridade","Superior");
+		dsl.selecionarCombo("elementosForm:esportes", "Corrida");
 		
-		new Select(driver.findElement(By.id("elementosForm:escolaridade"))).selectByVisibleText("Superior");
-		new Select(driver.findElement(By.id("elementosForm:esportes"))).selectByVisibleText("Corrida");
-		
-		
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.clicarBotao("elementosForm:cadastrar");
 		
 		
 		
